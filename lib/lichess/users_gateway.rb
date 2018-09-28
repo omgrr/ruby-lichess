@@ -6,6 +6,16 @@ module Lichess
       @client = client
     end
 
+    def get(username)
+      path = "/api/user/#{username}"
+      @client.get(path)
+    end
+
+    def activity(username)
+      path = "/api/user/#{username}/activity"
+      @client.get(path)
+    end
+
     def all_top_ten
       path = "/player"
       @client.get(path)

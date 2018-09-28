@@ -3,6 +3,22 @@ require "spec_helper"
 RSpec.describe Lichess::UsersGateway do
   let(:users_gateway) { Lichess::UsersGateway.new(Lichess::Client.new(valid_token)) }
 
+  describe "#get" do
+    it "returns the users public data" do
+      user = users_gateway.get("farnswurth")
+
+      expect(user["id"]).to eq("farnswurth")
+    end
+  end
+
+  describe "#activity" do
+    it "returns the users recent activity" do
+      activity = users_gateway.activity("farnswurth")
+
+      expect(activity.length).to_not be(0)
+    end
+  end
+
   describe "#all_top_ten" do
     it "returns the top ten of all the different types of games" do
       top_ten = users_gateway.all_top_ten
