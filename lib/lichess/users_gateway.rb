@@ -21,7 +21,13 @@ module Lichess
 
     def activity(username)
       path = "/api/user/#{username}/activity"
-      JSON.parse(@client.get(path).body)
+      result = @client.get(path)
+
+      if result.body == "[]"
+        raise Lichess::Exception::UserNotFound.new("#{username} not found")
+      end
+
+      JSON.parse(result.body)
     end
 
     def all_top_ten
