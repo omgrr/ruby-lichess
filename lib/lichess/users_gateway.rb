@@ -1,3 +1,5 @@
+require "json"
+
 module Lichess
   class UsersGateway
     attr_reader :client
@@ -8,22 +10,28 @@ module Lichess
 
     def get(username)
       path = "/api/user/#{username}"
-      @client.get(path)
+      result = @client.get(path)
+
+      if result.code == "404"
+        raise Lichess::Exception::UserNotFound.new("#{username} not found")
+      end
+
+      JSON.parse(result.body)
     end
 
     def activity(username)
       path = "/api/user/#{username}/activity"
-      @client.get(path)
+      JSON.parse(@client.get(path).body)
     end
 
     def all_top_ten
       path = "/player"
-      @client.get(path)
+      JSON.parse(@client.get(path).body)
     end
 
     def leaderboard(variant, number_of_users = 10)
       path = "/player/top/#{number_of_users}/#{variant}"
-      @client.get(path)
+      JSON.parse(@client.get(path).body)
     end
   end
 end

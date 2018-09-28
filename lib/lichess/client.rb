@@ -1,5 +1,4 @@
 require "net/http"
-require "json"
 
 module Lichess
   class Client
@@ -22,7 +21,7 @@ module Lichess
         http.request(req)
       end
 
-      JSON.parse(result.body)
+      return result
     end
 
     private

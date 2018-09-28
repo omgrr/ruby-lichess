@@ -9,6 +9,12 @@ RSpec.describe Lichess::UsersGateway do
 
       expect(user["id"]).to eq("farnswurth")
     end
+
+    it "raises an exception if the user is not found" do
+      expect do
+        users_gateway.get("a_user_that_does_not_exist_probably")
+      end.to raise_error(Lichess::Exception::UserNotFound)
+    end
   end
 
   describe "#activity" do
