@@ -1,5 +1,3 @@
-module Ruby
-  module Lichess
-    VERSION = "0.1.0"
-  end
+module Lichess
+  VERSION = "0.1.0"
 end

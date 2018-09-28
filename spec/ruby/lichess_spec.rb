@@ -1,5 +1,5 @@
-RSpec.describe Ruby::Lichess do
+RSpec.describe Lichess do
   it "has a version number" do
-    expect(Ruby::Lichess::VERSION).not_to be nil
+    expect(Lichess::VERSION).not_to be nil
   end
 end

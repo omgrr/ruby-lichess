@@ -4,7 +4,7 @@ require "ruby/lichess/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ruby-lichess"
-  spec.version       = Ruby::Lichess::VERSION
+  spec.version       = Lichess::VERSION
   spec.authors       = ["omgrr"]
   spec.email         = ["jerwis0731@gmail.com"]
 
