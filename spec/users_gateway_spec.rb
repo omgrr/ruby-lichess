@@ -22,4 +22,24 @@ RSpec.describe Lichess::UsersGateway do
       expect(top_ten["ultraBullet"]).to_not be_empty
     end
   end
+
+  describe "#leaderboard" do
+    it "returns the leaderboard of the requests variant" do
+      leaderboard = users_gateway.leaderboard("blitz")
+
+      expect(leaderboard["users"]).to_not be_empty
+    end
+
+    it "defaults to 10 users" do
+      leaderboard = users_gateway.leaderboard("blitz")
+
+      expect(leaderboard["users"].length).to eq(10)
+    end
+
+    it "accepts a custom number of users" do
+      leaderboard = users_gateway.leaderboard("blitz", 100)
+
+      expect(leaderboard["users"].length).to eq(100)
+    end
+  end
 end

@@ -10,5 +10,10 @@ module Lichess
       path = "/player"
       @client.get(path)
     end
+
+    def leaderboard(variant, number_of_users = 10)
+      path = "/player/top/#{number_of_users}/#{variant}"
+      @client.get(path)
+    end
   end
 end
