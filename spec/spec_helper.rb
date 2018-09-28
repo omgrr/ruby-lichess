@@ -1,5 +1,10 @@
 require "bundler/setup"
-require "ruby/lichess"
+require "lichess"
+require "pry"
+
+def valid_token
+  ENV["VALID_TOKEN"]
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
