@@ -38,5 +38,11 @@ RSpec.describe Lichess::GamesGateway do
 
       expect(games.length).to eq(8)
     end
+
+    it "throws an error if requesting more than 30 games" do
+      expect do
+        games_gateway.users_games("farnswurth", num_games: Lichess::GamesGateway::MAX_GAMES + 1)
+      end.to raise_error(Lichess::Exception::TooManyGames)
+    end
   end
 end

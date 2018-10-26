@@ -4,6 +4,8 @@ module Lichess
   class GamesGateway
     attr_reader :client
 
+    MAX_GAMES = 30
+
     def initialize(client)
       @client = client
     end
@@ -20,6 +22,10 @@ module Lichess
     end
 
     def users_games(user_id, num_games: 10, &blk)
+      if num_games > MAX_GAMES
+        raise Exception::TooManyGames.new("Cannot request more than 30 games")
+      end
+
       path = "/api/games/user/#{user_id}?max=#{num_games}"
 
       http_headers = {}
