@@ -12,11 +12,17 @@ module Lichess
       @users_gateway ||= UsersGateway.new(self)
     end
 
-    def get(path)
+    def games
+      @games_gateway ||= GamesGateway.new(self)
+    end
+
+    def get(path, http_headers = {})
       uri = URI("#{base_url}#{path}")
 
       req = Net::HTTP::Get.new(uri)
-      req["Accept"] = "application/vnd.lichess.v3+json"
+      req["Accept"] = http_headers[:accept] || "application/vnd.lichess.v3+json"
+      req["Content-Type"] = http_headers[:content_type] || "application/json"
+
       result = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         http.request(req)
       end

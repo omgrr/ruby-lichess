@@ -8,4 +8,12 @@ RSpec.describe Lichess::Client do
       expect(client.users).to be_a(Lichess::UsersGateway)
     end
   end
+
+  describe "#games" do
+    it "returns a GamesGateway" do
+      client = Lichess::Client.new(valid_token)
+
+      expect(client.games).to be_a(Lichess::GamesGateway)
+    end
+  end
 end
