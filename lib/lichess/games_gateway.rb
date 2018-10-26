@@ -19,8 +19,8 @@ module Lichess
       JSON.parse(result.body)
     end
 
-    def users_games(user_id, &blk)
-      path = "/api/games/user/#{user_id}?max=10"
+    def users_games(user_id, num_games: 10, &blk)
+      path = "/api/games/user/#{user_id}?max=#{num_games}"
 
       http_headers = {}
       http_headers[:accept] = "application/x-ndjson"

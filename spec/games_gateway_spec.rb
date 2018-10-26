@@ -18,5 +18,25 @@ RSpec.describe Lichess::GamesGateway do
         expect(json["id"]).to_not be_nil
       end
     end
+
+    it "defaults to 10 games" do
+      games = []
+
+      games_gateway.users_games("farnswurth") do |json|
+        games << json
+      end
+
+      expect(games.length).to eq(10)
+    end
+
+    it "can specify the length" do
+      games = []
+
+      games_gateway.users_games("farnswurth", num_games: 8) do |json|
+        games << json
+      end
+
+      expect(games.length).to eq(8)
+    end
   end
 end
