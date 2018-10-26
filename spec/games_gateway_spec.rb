@@ -12,7 +12,7 @@ RSpec.describe Lichess::GamesGateway do
     end
   end
 
-  describe "users_games" do
+  describe "#users_games" do
     it "exports a users games" do
       games_gateway.users_games("farnswurth") do |json|
         expect(json["id"]).to_not be_nil

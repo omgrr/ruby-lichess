@@ -1,4 +1,5 @@
 require "net/http"
+require "http"
 
 module Lichess
   class Client
@@ -16,18 +17,30 @@ module Lichess
       @games_gateway ||= GamesGateway.new(self)
     end
 
-    def get(path, http_headers = {})
-      uri = URI("#{base_url}#{path}")
+    def get(path, http_headers: {})
+      url = "#{base_url}#{path}"
 
-      req = Net::HTTP::Get.new(uri)
-      req["Accept"] = http_headers[:accept] || "application/vnd.lichess.v3+json"
-      req["Content-Type"] = http_headers[:content_type] || "application/json"
+      http_headers[:accept] ||= "application/vnd.lichess.v3+json"
+      http_headers[:content_type] ||= "application/json"
 
-      result = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-        http.request(req)
-      end
+      response = HTTP
+        .headers(http_headers)
+        .get(url)
 
-      return result
+      return response
+    end
+
+    def post(path, body: nil, http_headers: {})
+      url = "#{base_url}#{path}"
+
+      http_headers[:accept] ||= "application/vnd.lichess.v3+json"
+      http_headers[:content_type] ||= "application/json"
+
+      response = HTTP
+        .headers(http_headers)
+        .post(url)
+
+      return response
     end
 
     private

@@ -17,7 +17,7 @@ module Lichess
       http_headers[:accept] = "application/json"
       http_headers[:content_type] = "application/json"
 
-      result = @client.get(path, http_headers)
+      result = @client.get(path, http_headers: http_headers)
       JSON.parse(result.body)
     end
 
@@ -28,16 +28,22 @@ module Lichess
 
       path = "/api/games/user/#{user_id}?max=#{num_games}"
 
-      http_headers = {}
-      http_headers[:accept] = "application/x-ndjson"
-      http_headers[:content_type] = "application/x-ndjson"
-
-      result = @client.get(path, http_headers)
+      result = @client.get(path, http_headers: ndjson_headers)
       stringio = StringIO.new(result.body)
 
       NDJSON::Parser.new(stringio).each do |json|
         yield json
       end
+    end
+
+    private
+
+    def ndjson_headers
+      http_headers = {}
+      http_headers[:accept] = "application/x-ndjson"
+      http_headers[:content_type] = "application/x-ndjson"
+
+      http_headers
     end
   end
 end

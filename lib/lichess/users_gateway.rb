@@ -12,7 +12,7 @@ module Lichess
       path = "/api/user/#{username}"
       result = @client.get(path)
 
-      if result.code == "404"
+      if result.code == 404
         raise Lichess::Exception::UserNotFound.new("#{username} not found")
       end
 
@@ -23,7 +23,7 @@ module Lichess
       path = "/api/user/#{username}/activity"
       result = @client.get(path)
 
-      if result.body == "[]"
+      if result.body.to_s == "[]"
         raise Lichess::Exception::UserNotFound.new("#{username} not found")
       end
 
