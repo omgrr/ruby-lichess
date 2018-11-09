@@ -45,4 +45,11 @@ RSpec.describe Lichess::GamesGateway do
       end.to raise_error(Lichess::Exception::TooManyGames)
     end
   end
+
+  describe "#ongoing_games" do
+    it "gets the current users ongoing games" do
+      current_games = games_gateway.ongoing_games
+      expect(current_games).to_not be_empty
+    end
+  end
 end

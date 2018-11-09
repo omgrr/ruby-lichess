@@ -1,13 +1,15 @@
 require "bundler/setup"
 require "lichess"
 require "pry"
+require "dotenv"
 
 def valid_token
-  ENV["VALID_TOKEN"]
+  valid_token ||= ENV["LICHESS_TOKEN"]
 end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
+  Dotenv.load
   config.example_status_persistence_file_path = ".rspec_status"
 
   # Disable RSpec exposing methods globally on `Module` and `main`

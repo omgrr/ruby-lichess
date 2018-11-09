@@ -22,6 +22,7 @@ module Lichess
 
       http_headers[:accept] ||= "application/vnd.lichess.v3+json"
       http_headers[:content_type] ||= "application/json"
+      http_headers[:authorization] ||= "Bearer #{@token}"
 
       response = HTTP
         .headers(http_headers)

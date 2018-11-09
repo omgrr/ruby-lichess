@@ -36,6 +36,14 @@ module Lichess
       end
     end
 
+    def ongoing_games
+      path = "/api/account/playing"
+
+      result = @client.get(path)
+
+      JSON.parse(result.body)
+    end
+
     private
 
     def ndjson_headers
