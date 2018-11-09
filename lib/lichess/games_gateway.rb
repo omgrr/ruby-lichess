@@ -21,12 +21,16 @@ module Lichess
       JSON.parse(result.body)
     end
 
-    def users_games(user_id, num_games: 10, &blk)
+    def users_games(user_id, options = {}, &blk)
+      num_games = options[:num_games] || 10
+
       if num_games > MAX_GAMES
         raise Exception::TooManyGames.new("Cannot request more than 30 games")
       end
 
       path = "/api/games/user/#{user_id}?max=#{num_games}"
+      path << "&ongoing=#{options[:ongoing]}" if options[:ongoing]
+      path << "&perfType=#{options[:perf]}" if options[:perf]
 
       result = @client.get(path, http_headers: ndjson_headers)
       stringio = StringIO.new(result.body)

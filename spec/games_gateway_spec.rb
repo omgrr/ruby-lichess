@@ -17,6 +17,7 @@ RSpec.describe Lichess::GamesGateway do
       games_gateway.users_games("farnswurth") do |json|
         expect(json["id"]).to_not be_nil
       end
+
     end
 
     it "defaults to 10 games" do
@@ -37,6 +38,34 @@ RSpec.describe Lichess::GamesGateway do
       end
 
       expect(games.length).to eq(8)
+    end
+
+    it "can request only ongoing games" do
+      games = []
+
+      games_gateway.users_games("farnswurth", ongoing: true) do |json|
+        games << json
+      end
+
+      expect(games.length).to eq(10)
+    end
+
+    it "can specify the variant" do
+      games = []
+
+      options = {}
+      options[:perf] = "correspondence"
+      options[:ongoing] = "true"
+
+      games_gateway.users_games("farnswurth", options) do |json|
+        games << json
+      end
+
+      expect(games.length).to be > 0
+
+      games.each do |game|
+        expect(game["perf"]).to eq("correspondence")
+      end
     end
 
     it "throws an error if requesting more than 30 games" do
