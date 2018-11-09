@@ -31,6 +31,7 @@ module Lichess
       path = "/api/games/user/#{user_id}?max=#{num_games}"
       path << "&ongoing=#{options[:ongoing]}" if options[:ongoing]
       path << "&perfType=#{options[:perf]}" if options[:perf]
+      path << "&vs=#{options[:vs]}" if options[:vs]
 
       result = @client.get(path, http_headers: ndjson_headers)
       stringio = StringIO.new(result.body)

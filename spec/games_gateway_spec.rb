@@ -68,6 +68,29 @@ RSpec.describe Lichess::GamesGateway do
       end
     end
 
+    it "can specify games against someone" do
+      games = []
+
+      options = {}
+      options[:vs] = "bigswifty"
+      options[:ongoing] = "true"
+
+      games_gateway.users_games("farnswurth", options) do |json|
+        games << json
+      end
+
+      expect(games.length).to be > 0
+
+      games.each do |game|
+        players = []
+        players << game["players"]["white"]
+        players << game["players"]["black"]
+
+        expect(players.detect{ |player| player["user"]["id"] == "bigswifty" } ).to_not be_nil
+
+      end
+    end
+
     it "throws an error if requesting more than 30 games" do
       expect do
         games_gateway.users_games("farnswurth", num_games: Lichess::GamesGateway::MAX_GAMES + 1)
