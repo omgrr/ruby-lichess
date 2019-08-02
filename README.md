@@ -18,18 +18,36 @@ Or install it yourself as:
 
 ## Usage
 
-Creating a client
-
-```
-client = Lichess::Client.new([token])
-```
-
 ### Users
 
-All Top Ten
+*All Top Ten*
+
+Get the top ten of all different types of games.
 
 ```
 result = lichess.users.all_top_ten()
+```
+
+*Get leaderboard*
+
+Get the leaderboard for the specified variant
+
+```
+result = lichess.users.leaderboard("blitz")
+```
+
+Can specify the number of users to get for the particular variant
+
+```
+result = lichess.users.leaderboard("blitz", 100)
+```
+
+*Get users*
+
+Get a users data
+
+```
+result = lichess.users.get("username")
 ```
 
 ## Development
