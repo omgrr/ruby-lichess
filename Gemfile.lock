@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-lichess (0.1.0)
+    ruby-lichess (0.2.0)
       http (~> 4.0)
       ndjson (~> 1.0)
 
