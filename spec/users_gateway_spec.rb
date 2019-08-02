@@ -1,7 +1,14 @@
 require "spec_helper"
 
 RSpec.describe Lichess::UsersGateway do
-  let(:users_gateway) { Lichess::UsersGateway.new(Lichess::Client.new(valid_token)) }
+  let(:users_gateway) {
+    Lichess::UsersGateway.new(
+      Lichess::Client.new(
+        valid_token,
+        logger: StringIO.new
+      )
+    )
+  }
 
   describe "#get" do
     it "returns the users public data" do

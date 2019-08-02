@@ -1,7 +1,14 @@
 require "spec_helper"
 
 RSpec.describe Lichess::GamesGateway do
-  let(:games_gateway) { Lichess::GamesGateway.new(Lichess::Client.new(valid_token)) }
+  let(:games_gateway) {
+    Lichess::GamesGateway.new(
+      Lichess::Client.new(
+        valid_token,
+        logger: StringIO.new
+      )
+    )
+  }
 
   describe "#export" do
     it "returns the game in a json format" do

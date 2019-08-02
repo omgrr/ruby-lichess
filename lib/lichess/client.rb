@@ -1,12 +1,17 @@
 require "net/http"
 require "http"
+require "logger"
 
 module Lichess
   class Client
     attr_reader :token
+    attr_accessor :logger
 
-    def initialize(token)
+    def initialize(token, logger: STDOUT)
       @token = token
+      @logger = Logger.new(logger)
+      @logger.level = Logger::INFO
+      @http = HTTP.use(logging: {logger: @logger})
     end
 
     def users
@@ -24,7 +29,7 @@ module Lichess
       http_headers[:content_type] ||= "application/json"
       http_headers[:authorization] ||= "Bearer #{@token}"
 
-      response = HTTP
+      response = @http
         .headers(http_headers)
         .get(url)
 
