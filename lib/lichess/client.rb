@@ -7,9 +7,9 @@ module Lichess
     attr_reader :token
     attr_accessor :logger
 
-    def initialize(token, logger: STDOUT)
+    def initialize(token, logger: nil)
       @token = token
-      @logger = Logger.new(logger)
+      @logger = logger || Logger.new(STDOUT)
       @logger.level = Logger::INFO
       @http = HTTP.use(logging: {logger: @logger})
     end

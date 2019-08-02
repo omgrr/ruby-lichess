@@ -5,7 +5,7 @@ RSpec.describe Lichess::UsersGateway do
     Lichess::UsersGateway.new(
       Lichess::Client.new(
         valid_token,
-        logger: StringIO.new
+        logger: Logger.new(StringIO.new),
       )
     )
   }

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Lichess::Client do
   let(:client) {
-    Lichess::Client.new(valid_token, logger: StringIO.new)
+    Lichess::Client.new(valid_token, logger: Logger.new(StringIO.new))
   }
 
   describe "#users" do
@@ -20,7 +20,7 @@ RSpec.describe Lichess::Client do
   describe "#get" do
     it "Logs the request" do
       log_output = StringIO.new
-      client = Lichess::Client.new(valid_token, logger: log_output)
+      client = Lichess::Client.new(valid_token, logger: Logger.new(log_output))
 
       client.get("/api/user/omgrr")
 
