@@ -60,7 +60,9 @@ result = lichess.users.get("username")
 
 Get multiple users by passing in an array
 
+```
 result = lichess.users.get(["username1", "username2"])
+```
 
 ## Development
 
