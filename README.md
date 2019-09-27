@@ -18,6 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
+### Client
+
+Get started by first creating a client
+
+```
+lichess = Lichess::Client.new(LICHESS_API_TOKEN)
+```
+
 ### Users
 
 *All Top Ten*
@@ -49,6 +57,10 @@ Get a users data
 ```
 result = lichess.users.get("username")
 ```
+
+Get multiple users by passing in an array
+
+result = lichess.users.get(["username1", "username2"])
 
 ## Development
 
