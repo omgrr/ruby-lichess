@@ -22,6 +22,21 @@ RSpec.describe Lichess::UsersGateway do
         users_gateway.get("a_user_that_does_not_exist_probably")
       end.to raise_error(Lichess::Exception::UserNotFound)
     end
+
+    it "accepts an array of users" do
+      users = users_gateway.get(["farnswurth", "omgrr"])
+
+      expect(users.length).to eq(2)
+      expect(users[0]["id"]).to eq("farnswurth")
+      expect(users[1]["id"]).to eq("omgrr")
+    end
+
+    it "only returns users that exist" do
+      users = users_gateway.get(["a_user_that_does_not_exist_probably", "farnswurth"])
+
+      expect(users.length).to eq(1)
+      expect(users[0]["id"]).to eq("farnswurth")
+    end
   end
 
   describe "#activity" do

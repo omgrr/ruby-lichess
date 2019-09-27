@@ -42,9 +42,9 @@ module Lichess
       http_headers[:accept] ||= "application/vnd.lichess.v3+json"
       http_headers[:content_type] ||= "application/json"
 
-      response = HTTP
+      response = @http
         .headers(http_headers)
-        .post(url)
+        .post(url, body: body)
 
       return response
     end

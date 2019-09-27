@@ -8,12 +8,17 @@ module Lichess
       @client = client
     end
 
-    def get(username)
-      path = "/api/user/#{username}"
-      result = @client.get(path)
+    def get(usernames)
+      if usernames.is_a?(Array)
+        path = "/api/users"
+        result = @client.post(path, body: usernames.join(","))
+      else
+        path = "/api/user/#{usernames}"
+        result = @client.get(path)
+      end
 
       if result.code == 404
-        raise Lichess::Exception::UserNotFound.new("#{username} not found")
+        raise Lichess::Exception::UserNotFound.new("#{usernames} not found")
       end
 
       JSON.parse(result.body)
