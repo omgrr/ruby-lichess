@@ -6,6 +6,10 @@ module Lichess
 
     MAX_GAMES = 30
 
+    VALID_PARAMS = {
+      users_games: %w{perf perfType since until max vs rated color analysed ongoing movies pgnInJson tags clocks evals opening players ongoing, num_games}.map(&:to_sym)
+    }
+
     def initialize(client)
       @client = client
     end
@@ -21,12 +25,16 @@ module Lichess
       JSON.parse(result.body)
     end
 
+
     def users_games(user_id, options = {}, &blk)
       num_games = options[:num_games] || 10
 
       if num_games > MAX_GAMES
         raise Exception::TooManyGames.new("Cannot request more than 30 games")
       end
+
+      invalid_params = options.keys.reject { |k| VALID_PARAMS[:users_games].include? k }
+      raise Exception::InvalidParameter.new("#{invalid_params.join(",")} parameters were supplied, but are invalid") if invalid_params.any?
 
       path = "/api/games/user/#{user_id}?max=#{num_games}"
 
