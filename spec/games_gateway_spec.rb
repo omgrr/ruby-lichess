@@ -103,6 +103,12 @@ RSpec.describe Lichess::GamesGateway do
         games_gateway.users_games("farnswurth", num_games: Lichess::GamesGateway::MAX_GAMES + 1)
       end.to raise_error(Lichess::Exception::TooManyGames)
     end
+
+    it "rejects invalid parameters" do
+      expect do
+        games_gateway.users_games("jfredett", eris: "kallisti")
+      end.to raise_error(Lichess::Exception::InvalidParameter)
+    end
   end
 
   describe "#ongoing_games" do
